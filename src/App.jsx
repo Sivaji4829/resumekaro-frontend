@@ -8,8 +8,10 @@ import {
   RefreshCw, FileSearch, Check, Sparkles, AlertTriangle, Lock
 } from 'lucide-react';
 
-// Set this to your deployed Render URL when deploying to production (e.g., 'https://your-backend.onrender.com/api/v1')
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+// Auto-switch: Localhost for development, Render URL for production (Vercel)
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8000/api/v1' 
+  : 'https://resumekaro-backend.onrender.com/api/v1';
 
 // Initialize Supabase Client 
 const supabaseUrl = "https://xjsbbxqyrsdvgbbceuxe.supabase.co";
