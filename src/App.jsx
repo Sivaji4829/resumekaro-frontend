@@ -368,11 +368,8 @@ export default function App() {
       <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 no-print border-b border-slate-200/60 shadow-[0_4px_30px_rgba(0,0,0,0.03)] flex-shrink-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-auto py-3 sm:py-0 sm:h-16 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
           <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
-            <div className="flex items-center gap-2.5">
-                <div className="bg-indigo-600 p-1.5 rounded-lg shadow-[0_2px_10px_rgba(79,70,229,0.3)]">
-                  <FileText className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-bold text-xl tracking-tight text-slate-900">ResumeKaro</span>
+            <div className="flex items-center">
+                <img src="/rkposter.png" alt="ResumeKaro" className="h-8 sm:h-10 w-auto object-contain" />
             </div>
             {/* Mobile Log out */}
             <button onClick={handleLogout} className="sm:hidden flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all">
@@ -397,7 +394,7 @@ export default function App() {
       {/* Premium Toast Notification */}
       {notification && (
         <div className="fixed top-20 right-4 lg:bottom-16 lg:top-auto lg:right-6 bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.15)] z-[100] flex items-center gap-3 animate-in fade-in slide-in-from-top-5 lg:slide-in-from-bottom-5 no-print max-w-md border border-slate-700">
-          {notification.includes('Blocked') ? <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0" /> : <CheckCircle className="w-5 h-5 text-indigo-400 flex-shrink-0" />}
+          {notification.includes('Blocked') || notification.includes('Error') ? <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0" /> : <CheckCircle className="w-5 h-5 text-indigo-400 flex-shrink-0" />}
           <p className="text-sm font-medium leading-snug">{notification}</p>
         </div>
       )}
@@ -478,10 +475,7 @@ const AuthView = () => {
       
       <div className="w-full max-w-md bg-white/80 backdrop-blur-2xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 sm:p-10 relative z-10">
         <div className="flex flex-col items-center justify-center gap-4 mb-10">
-          <div className="bg-gradient-to-br from-indigo-500 to-blue-600 p-4 rounded-2xl shadow-[0_4px_20px_rgba(79,70,229,0.3)]">
-             <FileText className="w-8 h-8 text-white" />
-          </div>
-          <span className="font-extrabold text-3xl text-slate-900 tracking-tight">ResumeKaro</span>
+          <img src="/rkposter.png" alt="ResumeKaro" className="h-12 w-auto object-contain" />
         </div>
         
         <h2 className="text-lg font-bold text-center text-slate-800 mb-6">{isLogin ? 'Welcome Back' : 'Create an Account'}</h2>
@@ -984,25 +978,27 @@ const ATSCheckerView = ({ jobDescription, setJobDescription, runAtsCheck, isAnal
             <p className="text-slate-500 mt-2 text-sm sm:text-base font-medium">Compare your resume against a job description to get a match score and tips.</p>
           </div>
           
-          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col border border-slate-100 h-full overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col border border-slate-100 h-full flex-grow overflow-hidden">
             <div className="flex border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
               <button onClick={() => setInputMode('text')} className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-all ${inputMode === 'text' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-white shadow-sm' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}>Paste Text</button>
               <button onClick={() => setInputMode('file')} className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-all flex justify-center items-center gap-2 ${inputMode === 'file' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-white shadow-sm' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}>Upload Document</button>
             </div>
             
-            <div className="p-6 sm:p-8 flex-grow flex flex-col bg-white overflow-y-auto custom-scrollbar">
-              {inputMode === 'text' ? (
-                <textarea className="w-full flex-grow bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none resize-none min-h-[160px] custom-scrollbar text-slate-800 placeholder-slate-400 transition-all font-medium" placeholder="Paste the job description here..." value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} />
-              ) : (
-                <div className="flex-grow border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-8 text-center bg-slate-50 hover:bg-slate-100 hover:border-indigo-300 transition-all cursor-pointer group min-h-[160px]" onClick={() => fileInputRef.current.click()}>
-                  <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" />
-                  {isExtracting ? <RefreshCw className="w-10 h-10 animate-spin text-indigo-500" /> : <UploadCloud className="w-14 h-14 text-slate-300 group-hover:text-indigo-500 group-hover:-translate-y-1 transition-all duration-300" />}
-                  <p className="mt-4 text-sm font-bold text-slate-700">Click to select a file</p>
-                  <p className="text-xs text-slate-400 mt-1.5 font-medium">PDF, DOCX, TXT</p>
-                </div>
-              )}
+            <div className="p-6 sm:p-8 flex flex-col bg-white flex-grow">
+              <div className="flex-grow min-h-[160px] relative mb-6">
+                {inputMode === 'text' ? (
+                  <textarea className="absolute inset-0 w-full h-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none resize-none custom-scrollbar text-slate-800 placeholder-slate-400 transition-all font-medium" placeholder="Paste the job description here..." value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center bg-slate-50 hover:bg-slate-100 hover:border-indigo-300 transition-all cursor-pointer group" onClick={() => fileInputRef.current.click()}>
+                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" />
+                    {isExtracting ? <RefreshCw className="w-10 h-10 animate-spin text-indigo-500" /> : <UploadCloud className="w-14 h-14 text-slate-300 group-hover:text-indigo-500 group-hover:-translate-y-1 transition-all duration-300" />}
+                    <p className="mt-4 text-sm font-bold text-slate-700">Click to select a file</p>
+                    <p className="text-xs text-slate-400 mt-1.5 font-medium">PDF, DOCX, TXT</p>
+                  </div>
+                )}
+              </div>
               
-              <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-4 w-full flex-shrink-0">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full flex-shrink-0">
                 <button onClick={runFastScore} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:shadow-md font-bold py-3.5 px-4 rounded-xl shadow-sm transition-all disabled:opacity-50 flex justify-center items-center gap-2">
                   {isAnalyzingFast ? <RefreshCw className="w-4 h-4 animate-spin text-slate-500" /> : <Zap className="w-4 h-4 text-amber-500" />} 
                   <span className="truncate">Quick Score</span>
