@@ -729,7 +729,7 @@ const BuilderView = ({ data, handleUpdateField, handleUpdateArray, handleAddArra
       
       {/* Preview Side */}
       <div className={`w-full lg:w-7/12 bg-slate-100/50 p-4 sm:p-10 overflow-y-auto custom-scrollbar flex flex-col items-center relative z-10 border-t lg:border-t-0 border-slate-200 ${isLocked ? 'opacity-20 filter blur-sm pointer-events-none' : ''}`}>
-        <div className="w-full flex flex-col sm:flex-row justify-end mb-8 max-w-[850px] gap-4">
+        <div className="w-full flex flex-col sm:flex-row justify-end mb-8 max-w-[850px] gap-4 flex-shrink-0">
           <button onClick={saveResumeToDatabase} disabled={isSaving || isLocked} className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm disabled:opacity-50">
             {isSaving ? <RefreshCw className="w-4 h-4 animate-spin"/> : <Save className="w-4 h-4" />} Save Progress
           </button>
@@ -737,7 +737,7 @@ const BuilderView = ({ data, handleUpdateField, handleUpdateArray, handleAddArra
             <Download className="w-4 h-4" /> Download PDF
           </button>
         </div>
-        <div className="bg-white rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-[850px] aspect-[1/1.414] origin-top overflow-hidden border border-slate-200 lg:scale-[0.85] xl:scale-95 transition-transform mb-12 lg:mb-0">
+        <div className="bg-white rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-[850px] aspect-[1/1.414] origin-top overflow-hidden border border-slate-200 lg:scale-[0.85] xl:scale-95 transition-transform mb-12 lg:mb-0 flex-shrink-0">
           <DynamicResumeTemplate data={data} templateId={selectedTemplate} />
         </div>
       </div>
@@ -961,9 +961,9 @@ const ATSCheckerView = ({ jobDescription, setJobDescription, runAtsCheck, isAnal
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col lg:flex-row gap-8 overflow-y-auto flex-grow">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col lg:flex-row gap-8 overflow-y-auto flex-grow h-full">
       {/* Left side: JD Input with Lock Overlay */}
-      <div className="w-full lg:w-1/2 flex flex-col relative">
+      <div className="w-full lg:w-1/2 flex flex-col relative min-h-[450px]">
         
         {scanLimitReached && (
           <div className="absolute inset-0 z-50 bg-white/80 backdrop-blur-md flex flex-col items-center justify-center rounded-3xl border border-slate-200/50 p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
@@ -979,33 +979,35 @@ const ATSCheckerView = ({ jobDescription, setJobDescription, runAtsCheck, isAnal
         )}
 
         <div className={`flex flex-col h-full ${scanLimitReached ? 'opacity-20 pointer-events-none select-none filter blur-sm transition-all duration-500' : ''}`}>
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-6 sm:mb-8 flex-shrink-0">
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Resume Analyzer</h2>
             <p className="text-slate-500 mt-2 text-sm sm:text-base font-medium">Compare your resume against a job description to get a match score and tips.</p>
           </div>
-          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex-grow flex flex-col overflow-hidden border border-slate-100">
-            <div className="flex border-b border-slate-100 bg-slate-50/50">
+          
+          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col border border-slate-100 h-full overflow-hidden">
+            <div className="flex border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
               <button onClick={() => setInputMode('text')} className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-all ${inputMode === 'text' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-white shadow-sm' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}>Paste Text</button>
               <button onClick={() => setInputMode('file')} className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-all flex justify-center items-center gap-2 ${inputMode === 'file' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-white shadow-sm' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}>Upload Document</button>
             </div>
-            <div className="p-6 sm:p-8 flex-grow flex flex-col bg-white">
+            
+            <div className="p-6 sm:p-8 flex-grow flex flex-col bg-white overflow-y-auto custom-scrollbar">
               {inputMode === 'text' ? (
-                <textarea className="w-full flex-grow bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none resize-none min-h-[200px] sm:min-h-[250px] custom-scrollbar text-slate-800 placeholder-slate-400 transition-all font-medium" placeholder="Paste the job description here..." value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} />
+                <textarea className="w-full flex-grow bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none resize-none min-h-[160px] custom-scrollbar text-slate-800 placeholder-slate-400 transition-all font-medium" placeholder="Paste the job description here..." value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} />
               ) : (
-                <div className="flex-grow border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-8 text-center bg-slate-50 hover:bg-slate-100 hover:border-indigo-300 transition-all cursor-pointer group" onClick={() => fileInputRef.current.click()}>
+                <div className="flex-grow border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-8 text-center bg-slate-50 hover:bg-slate-100 hover:border-indigo-300 transition-all cursor-pointer group min-h-[160px]" onClick={() => fileInputRef.current.click()}>
                   <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" />
                   {isExtracting ? <RefreshCw className="w-10 h-10 animate-spin text-indigo-500" /> : <UploadCloud className="w-14 h-14 text-slate-300 group-hover:text-indigo-500 group-hover:-translate-y-1 transition-all duration-300" />}
                   <p className="mt-4 text-sm font-bold text-slate-700">Click to select a file</p>
                   <p className="text-xs text-slate-400 mt-1.5 font-medium">PDF, DOCX, TXT</p>
                 </div>
               )}
-              {/* Flex-col strictly for mobile, flex-row for larger screens with wrapping handled gracefully */}
-              <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-4 w-full">
-                <button onClick={runFastScore} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 font-bold py-3.5 rounded-xl shadow-sm transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+              
+              <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-4 w-full flex-shrink-0">
+                <button onClick={runFastScore} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:shadow-md font-bold py-3.5 px-4 rounded-xl shadow-sm transition-all disabled:opacity-50 flex justify-center items-center gap-2">
                   {isAnalyzingFast ? <RefreshCw className="w-4 h-4 animate-spin text-slate-500" /> : <Zap className="w-4 h-4 text-amber-500" />} 
                   <span className="truncate">Quick Score</span>
                 </button>
-                <button onClick={runAtsCheck} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(79,70,229,0.39)] transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+                <button onClick={runAtsCheck} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-[0_4px_14px_0_rgb(79,70,229,0.39)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.23)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none flex justify-center items-center gap-2">
                   {isAnalyzing ? <RefreshCw className="w-4 h-4 animate-spin text-white" /> : <FileSearch className="w-4 h-4 text-white" />} 
                   <span className="truncate">Detailed Analysis</span>
                 </button>
