@@ -999,12 +999,15 @@ const ATSCheckerView = ({ jobDescription, setJobDescription, runAtsCheck, isAnal
                   <p className="text-xs text-slate-400 mt-1.5 font-medium">PDF, DOCX, TXT</p>
                 </div>
               )}
-              <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                <button onClick={runFastScore} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 font-bold py-3.5 rounded-xl shadow-sm transition-all disabled:opacity-50 flex justify-center items-center gap-2">
-                  {isAnalyzingFast ? <RefreshCw className="w-4 h-4 animate-spin text-slate-500" /> : <Zap className="w-4 h-4 text-amber-500" />} Quick Score
+              {/* Flex-col strictly for mobile, flex-row for larger screens with wrapping handled gracefully */}
+              <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-4 w-full">
+                <button onClick={runFastScore} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 font-bold py-3.5 rounded-xl shadow-sm transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+                  {isAnalyzingFast ? <RefreshCw className="w-4 h-4 animate-spin text-slate-500" /> : <Zap className="w-4 h-4 text-amber-500" />} 
+                  <span className="truncate">Quick Score</span>
                 </button>
-                <button onClick={runAtsCheck} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(79,70,229,0.39)] transition-all disabled:opacity-50 flex justify-center items-center gap-2">
-                  {isAnalyzing ? <RefreshCw className="w-4 h-4 animate-spin text-white" /> : <FileSearch className="w-4 h-4 text-white" />} Detailed Analysis
+                <button onClick={runAtsCheck} disabled={isAnalyzing || isAnalyzingFast || isExtracting} className="flex-1 min-w-[140px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(79,70,229,0.39)] transition-all disabled:opacity-50 flex justify-center items-center gap-2">
+                  {isAnalyzing ? <RefreshCw className="w-4 h-4 animate-spin text-white" /> : <FileSearch className="w-4 h-4 text-white" />} 
+                  <span className="truncate">Detailed Analysis</span>
                 </button>
               </div>
             </div>
